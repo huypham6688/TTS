@@ -1,0 +1,59 @@
+/* Global reset to prevent overflow from default styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Search bar styles */
+.search-bar {
+    width: 60vw; /* Use viewport width for better control */
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px; /* Minimal padding */
+}
+
+.search-bar input {
+    width: 100%;
+    max-width: 400px; /* Cap maximum width */
+    padding: 6px; /* Reduced padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #888;
+    box-sizing: border-box;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 80vw; /* Wider on tablets */
+    }
+
+    .search-bar input {
+        padding: 5px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar {
+        width: 90vw; /* Near full width on mobile */
+    }
+
+    .search-bar input {
+        padding: 4px;
+        font-size: 12px;
+    }
+}

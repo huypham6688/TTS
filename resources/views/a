@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Hyra Network - Blockchain Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #121212, #2a2a2a);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+            perspective: 1000px;
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header, section {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 3D Cubes Background Styles */
+        .cube-container {
+            position: absolute; /* Changed from fixed to absolute to confine to hero section */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .cube-group {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .cube {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            animation: rotate 8s infinite linear;
+        }
+
+        .cube:nth-child(1) { top: 20%; left: 35%; transform: translateX(-50%) scale(1.8); animation-delay: 0s; }
+        .cube:nth-child(2) { top: 20%; right: 35%; transform: translateX(50%) scale(1.8); animation-delay: 0.5s; }
+        .cube:nth-child(3) { top: 45%; left: 20%; transform: scale(1.6); animation-delay: 1s; }
+        .cube:nth-child(4) { top: 45%; left: 50%; transform: translateX(-50%) scale(1.7); animation-delay: 1.5s; }
+        .cube:nth-child(5) { top: 45%; right: 20%; transform: scale(1.6); animation-delay: 2s; }
+        .cube:nth-child(6) { bottom: 20%; left: 35%; transform: scale(1.6); animation-delay: 2.5s; }
+        .cube:nth-child(7) { bottom: 20%; right: 35%; transform: scale(1.6); animation-delay: 3s; }
+
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 4px solid rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0px;
+            color: transparent;
+            opacity: 1;
+            box-shadow: 0 0 30px rgba(10, 10, 10, 0.8);
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        .front  { transform: rotateY(0deg) translateZ(75px); }
+        .back   { transform: rotateY(180deg) translateZ(75px); }
+        .right  { transform: rotateY(90deg) translateZ(75px); }
+        .left   { transform: rotateY(-90deg) translateZ(75px); }
+        .top    { transform: rotateX(90deg) translateZ(75px); }
+        .bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+        @keyframes rotate {
+            from { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(18, 18, 18, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff00ff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            color: #ff00ff;
+        }
+
+        nav .template-btn {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s, transform 0.2s;
+            border: 1px solid #ff00ff;
+        }
+
+        nav .template-btn:hover {
+            background: #ff00ff;
+            transform: scale(1.05);
+        }
+
+        section {
+            padding: 150px 50px 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            font-size: 4.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #ff00ff;
+            font-weight: 900;
+        }
+
+        .btn {
+            background: #333;
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1em;
+            transition: background 0.3s, transform 0.2s;
+            border: 1px solid #ff00ff;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #ff00ff;
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background: #ff00ff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #cc00cc;
+        }
+
+        .placeholder-img {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #333, #555);
+            margin: 30px auto;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            opacity: 0.5;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .features-grid, .pricing-grid, .blog-grid, .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .feature-card, .pricing-card, .blog-card, .testimonial-card {
+            background: rgba(42, 42, 42, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: left;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
+        }
+
+        .feature-card h3, .pricing-card h3, .blog-card h3, .testimonial-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ff00ff;
+        }
+
+        .pricing-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #ff00ff;
+        }
+
+        .pricing-card.popular::before {
+            content: 'Most popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff00ff;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pricing-card ul li {
+            margin-bottom: 15px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-card ul li::before {
+            content: '✔';
+            color: #ff00ff;
+        }
+
+        .blog-card img, .testimonial-card img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
+        }
+
+        .faq-item {
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .faq-item h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 0;
+            color: #fff;
+        }
+
+        .faq-item p {
+            display: none;
+            max-width: 100%;
+            padding: 0 0 15px;
+            color: #ccc;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        .toggle {
+            font-size: 1.2em;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .toggle {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="text-white font-sans">
+<!-- Navigation Bar -->
+<header class="fixed top-0 w-full z-20">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold">
+            <span class="text-pink-500">H</span>
+        </div>
+        <ul class="flex space-x-6">
+            <li><a href="#home" class="text-gray-300 hover:text-white">Home</a></li>
+            <li><a href="#about" class="text-gray-300 hover:text-white">About us</a></li>
+            <li>
+                <a href="#" class="text-gray-300 hover:text-white flex items-center">
+                    Ecosystem
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="#blog" class="text-gray-300 hover:text-white flex items-center">
+                    Resource
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+        <div class="flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M12 3v18"/>
+            </svg>
+            <span class="text-gray-300">EN</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="min-h-screen flex items-center justify-center relative z-10">
+    <!-- 3D Rotating Cubes Background -->
+    <div class="cube-container">
+        <div class="cube-group">
+            <!-- 2 cubes on top -->
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+
+            <!-- 3 cubes in middle -->
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+
+            <!-- 2 cubes on bottom -->
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 text-center relative z-20">
+        <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+            DECENTRALIZED NETWORK<br/>BUILDING THE FUTURE OF AI
+        </h1>
+        <p class="text-lg md:text-xl text-gray-400 mt-6 max-w-3xl mx-auto">
+            Leveraging computational power from billions of edge devices to provide a decentralized AI infrastructure, saving costs, and creating new value.
+        </p>
+
+        <!-- Cards Section -->
+        <div class="flex justify-center space-x-6 mt-12 flex-wrap">
+            <div class="glassmorphism rounded-xl p-6 flex items-center space-x-4 w-64 mb-4">
+                <div>
+                    <h3 class="text-xl font-semibold">DePIN</h3>
+                    <p class="text-gray-400">Decentralized Physical Infrastructure Networks</p>
+                </div>
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                </svg>
+            </div>
+
+            <div class="glassmorphism rounded-xl p-6 flex items-center space-x-4 w-64 mb-4">
+                <div>
+                    <h3 class="text-xl font-semibold">RWA</h3>
+                    <p class="text-gray-400">Real-World Asset</p>
+                </div>
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 2 -->
+<section class="section-2">
+    <h1><span class="highlight">Stay Ahead</span> with Real-Time Blockchain Insights</h1>
+    <p>Accessing real-time data empowers you to make informed decisions swiftly. Our platform ensures you never miss critical updates in the blockchain landscape.</p>
+    <div class="placeholder-img">[3D Rectangular Blocks Graphic Placeholder]</div>
+    <a href="#" class="btn">Learn More</a>
+</section>
+
+<!-- Section 3 -->
+<section class="section-3">
+    <h1><span class="highlight">Unlock Insights</span> with Enriched Blockchain Data</h1>
+    <p>Our enriched data transforms blockchain information into actionable insights, improving understanding of market trends and user behaviors.</p>
+    <div class="placeholder-img">[3D Cube Graphic Placeholder]</div>
+    <a href="#" class="btn">Learn More</a>
+    <p style="font-size: 0.8em; color: #888; margin-top: 20px;">Accuracy</p>
+</section>
+
+<!-- Section 4 -->
+<section class="section-4">
+    <h1><span class="highlight">Unlocking</span> Real-Time Blockchain Insights Effortlessly</h1>
+    <p>Our innovative system captures blockchain data from over 60 networks in real-time. We process and enrich this data to provide you with actionable insights that drive informed decisions.</p>
+    <div class="placeholder-img">[Circular Graphic Placeholder]</div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Total TVL</h3>
+            <p>$128.778b</p>
+        </div>
+        <div class="feature-card">
+            <h3>Change (24h)</h3>
+            <p>0.74%</p>
+        </div>
+        <div class="feature-card">
+            <h3>Volume (24h)</h3>
+            <p>$9.126b</p>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5 -->
+<section class="section-5">
+    <h1>60 Blockchains Data</h1>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Real-Time Insights</h3>
+            <p>Access blockchain data in real-time to make timely and informed decisions.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Data Integrity</h3>
+            <p>Trust in validated and consistent data for all your blockchain needs.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Developer-Friendly</h3>
+            <p>Enjoy robust APIs and tools for seamless integration and customization.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Cross-Network Coverage</h3>
+            <p>Support for 60+ networks ensures comprehensive blockchain analytics.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Scalable Solutions</h3>
+            <p>Seamlessly scale with our adaptable infrastructure.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Enhanced Security</h3>
+            <p>Protect blockchain data with top-tier encryption protocols.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing">
+    <h2>Pricing Options</h2>
+    <p>Choose the subscription plan that suits your needs</p>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3>Free</h3>
+            <p>Custom</p>
+            <ul>
+                <li>Access to 10+ blockchain networks</li>
+                <li>Up to 1,000 API calls per month</li>
+                <li>Basic analytics dashboard</li>
+                <li>Standard security and data encryption</li>
+            </ul>
+            <a href="#" class="btn">Try for free</a>
+        </div>
+        <div class="pricing-card popular">
+            <h3>Growth Plan</h3>
+            <p>$99 <span>per month</span></p>
+            <ul>
+                <li>Access to 30+ blockchain networks</li>
+                <li>Up to 50,000 API calls per month</li>
+                <li>Advanced analytics and data visualization</li>
+                <li>24-hour email support</li>
+                <li>API usage monitoring and reporting</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Get Started</a>
+        </div>
+        <div class="pricing-card">
+            <h3>Enterprise Plan</h3>
+            <p>Custom</p>
+            <ul>
+                <li>Unlimited blockchain network access</li>
+                <li>Custom API limits</li>
+                <li>Priority 24/7 support</li>
+                <li>Advanced fraud detection tools</li>
+                <li>Private and secure data environment</li>
+                <li>Monthly strategy reviews</li>
+            </ul>
+            <a href="#" class="btn">Get Started</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <h1><span class="highlight">Trusted by Innovators</span> to Lead the Web3 Revolution</h1>
+    <p>See how real-time blockchain data empowers businesses.</p>
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <div class="img">[Profile Image Placeholder]</div>
+            <p>The real-time insights from this platform have transformed the way our company approaches blockchain analytics. We've saved countless hours and boosted our decision-making capabilities.</p>
+            <h3>Michael Carter</h3>
+            <p>Chief Technology Officer</p>
+        </div>
+        <div class="testimonial-card">
+            <div class="img">[Profile Image Placeholder]</div>
+            <p>This service has been a game-changer for our startup. The accuracy and speed of blockchain data access helped us stay ahead of competitors. We’ve also discovered new opportunities we hadn’t considered before.</p>
+            <h3>Samantha Turner</h3>
+            <p>Product Manager</p>
+        </div>
+        <div class="testimonial-card">
+            <div class="img">[Profile Image Placeholder]</div>
+            <p>As a Web3 developer, having reliable and up-to-date blockchain data is crucial. This service has exceeded my expectations every single time. It has drastically reduced our development time on critical projects.</p>
+            <h3>John Doe</h3>
+            <p>Web3 Developer</p>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog" id="blog">
+    <h2>Blog</h2>
+    <p>Latest news</p>
+    <div class="blog-grid">
+        <div class="blog-card">
+            <div class="img">[Blog Image Placeholder]</div>
+            <h4 class="highlight">WEB3 BASICS</h4>
+            <h3>How Web3 is Revolutionizing the Digital Landscape</h3>
+            <a href="#" class="btn">Read more</a>
+        </div>
+        <div class="blog-card">
+            <div class="img">[Blog Image Placeholder]</div>
+            <h4 class="highlight">BLOCKCHAIN DATA FUELS INNOVATION</h4>
+            <h3>Transforming Web3 with Blockchain Data</h3>
+            <a href="#" class="btn">Read more</a>
+        </div>
+        <div class="blog-card">
+            <div class="img">[Blog Image Placeholder]</div>
+            <h4 class="highlight">UNIFIED DATA MATTERS</h4>
+            <h3>Closing Blockchain Data Gaps in Web3</h3>
+            <a href="#" class="btn">Read more</a>
+        </div>
+    </div>
+    <a href="#" class="btn" style="margin-top: 40px;">See all</a>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq" id="faq">
+    <h2>FAQ</h2>
+    <div class="faq-item">
+        <h3>What is Nodi and how does it work? <span class="toggle">+</span></h3>
+        <p>Nodi is a cutting-edge platform that provides real-time blockchain data to empower businesses in the Web3 era. We aggregate, analyze, and deliver blockchain transaction data in an easy-to-use format, enabling you to make informed decisions and innovate faster.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Who can benefit from using Nodi? <span class="toggle">+</span></h3>
+        <p>Businesses, developers, and analysts in the Web3 space can benefit from Nodi's real-time data and insights to enhance their operations and decision-making.</p>
+    </div>
+    <div class="faq-item">
+        <h3>What types of blockchain data does Nodi provide? <span class="toggle">+</span></h3>
+        <p>Nodi provides transaction data, market trends, user behaviors, and enriched analytics from over 60 blockchain networks.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is Nodi compatible with multiple blockchain networks? <span class="toggle">+</span></h3>
+        <p>Yes, Nodi supports over 60 blockchain networks, ensuring comprehensive cross-network coverage.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How secure is the data provided by Nodi? <span class="toggle">+</span></h3>
+        <p>Nodi employs top-tier encryption protocols and a secure data environment to protect all blockchain data.</p>
+    </div>
+</section>
+
+<script>
+    // Randomize cube colors on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const faces = document.querySelectorAll('.face');
+        faces.forEach(face => {
+            const blackShade = Math.floor(Math.random() * 30);
+            const randomColor = `rgba(${blackShade}, ${blackShade}, ${blackShade}, 1.0)`;
+            face.style.background = randomColor;
+            face.style.borderColor = `rgba(${blackShade + 20}, ${blackShade + 20}, ${blackShade + 20}, 0.9)`;
+        });
+    });
+
+    // Mouse movement effect for cubes
+    document.addEventListener('mousemove', (e) => {
+        const cubes = document.querySelectorAll('.cube');
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 60;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 60;
+
+        cubes.forEach(cube => {
+            const baseTransform = cube.style.animationPlayState === 'paused' ? cube.style.transform : '';
+            cube.style.transform = `${baseTransform} rotateX(${yAxis}deg) rotateY(${xAxis}deg)`;
+        });
+    });
+
+    // Randomize cube colors on click
+    document.addEventListener('click', () => {
+        const faces = document.querySelectorAll('.face');
+        faces.forEach(face => {
+            const blackShade = Math.floor(Math.random() * 30);
+            const randomColor = `rgba(${blackShade}, ${blackShade}, ${blackShade}, 1.0)`;
+            face.style.background = randomColor;
+            face.style.borderColor = `rgba(${blackShade + 20}, ${blackShade + 20}, ${blackShade + 20}, 0.9)`;
+        });
+    });
+
+    // FAQ toggle functionality
+    document.querySelectorAll('.faq-item h3').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            parent.classList.toggle('active');
+            const toggle = item.querySelector('.toggle');
+            toggle.textContent = parent.classList.contains('active') ? '−' : '+';
+        });
+    });
+</script>
+</body>
+<!-- Footer Section -->
+<footer class="bg-gray-900 text-white py-8">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-start">
+        <!-- Logo -->
+        <div class="mb-6 md:mb-0">
+            <div class="text-2xl font-bold flex items-center">
+                <span class="inline-block w-6 h-6 border-2 border-white rounded-full mr-2"></span>
+                <span>Nodi</span>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-12">
+            <!-- Services Column -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Services</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">Features</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Benefits</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Testimonials</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Column -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Terms of Use</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright and Made in Framer -->
+    <div class="container mx-auto px-6 pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">2025 Copyright © Nodi, All rights reserved.</p>
+        <a href="#" class="text-gray-400 text-sm border border-gray-400 rounded-full px-4 py-1 flex items-center hover:text-white hover:border-white">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+            </svg>
+            Made in Framer
+        </a>
+    </div>
+</footer>
+</html>
