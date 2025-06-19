@@ -1,0 +1,56 @@
+.header {
+    width: 100%;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffd1dc;
+    border: none;
+    outline: none;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #000;
+    font-weight: bold;
+}
+
+.header .menu-btn {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    border: 2px solid lightgray;
+    padding: 2px 2px;
+    justify-content: space-between;
+}
+
+.header .menu-btn span {
+    font-size: 40px;
+    color: #fff;
+    margin: 0 2px;
+}
+
+.header .menu-btn .menu-icon3 img,
+.header .menu-btn .menu-icon5 img {
+    width: 35px;
+    height: 35px;
+    display: block;
+    transform: translateY(-2px);
+}
+
+.header .menu-btn .menu-icon3,
+.header .menu-btn .menu-icon5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .menu-btn .separator {
+    font-size: 20px;
+    transform: translateY(0);
+}
