@@ -11,6 +11,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Bật mod_rewrite
 RUN a2enmod rewrite
 
+
 # Sao chép mã nguồn vào container
 COPY . /var/www/html
 
@@ -26,3 +27,10 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 # Thiết lập quyền truy cập
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
+
+RUN echo "<Directory /var/www/html/public>\n\
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>" > /etc/apache2/conf-available/static-files.conf \
+&& a2enconf static-files

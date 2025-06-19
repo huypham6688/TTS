@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{ asset('css/header.css') }}"></head>
+    <link rel="stylesheet" href="{{ asset('css/header.css') }}?v={{ time() }}">
 <body>
 <div class="header">
     <h1>Gift Card</h1>
@@ -13,4 +13,3 @@
 </div>
 </body>
 </html>
-
