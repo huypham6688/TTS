@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: tts-y17x
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_URL
+        value: https://tts-y17x.onrender.com
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: APP_DEBUG
+        value: false
+    static:
+      - source: public
+        destination: /
