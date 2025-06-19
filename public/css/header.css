@@ -1,16 +1,15 @@
-/* resources/css/header.css */
 .header {
     width: 100%;
-    padding: 20px 15px; /* Tăng padding trên dưới (20px) và trái phải (15px) */
+    padding: 20px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #ffd1dc;
-    border: none; /* Xóa viền */
-    outline: none; /* Xóa viền ngoài (outline) */
-    max-width: 100%; /* Ensure it doesn't exceed screen width */
-    box-sizing: border-box; /* Include padding in width calculation */
-    box-shadow: none; /* Xóa bóng (nếu có) */
+    border: none;
+    outline: none;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
 }
 
 .header h1 {
@@ -23,26 +22,25 @@
 .header .menu-btn {
     display: flex;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.3); /* Đổi thành đen trong suốt */
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 20px;
-    border: 2px solid lightgray; /* Xám nhạt */
-    padding: 2px 2px; /* Giảm padding */
-    justify-content: space-between; /* Phân bổ đều các phần tử */
+    border: 2px solid lightgray;
+    padding: 2px 2px;
+    justify-content: space-between;
 }
 
 .header .menu-btn span {
     font-size: 40px;
     color: #fff;
-    margin: 0 2px; /* Tăng margin để tạo khoảng cách phù hợp */
+    margin: 0 2px;
 }
 
-/* Styles for menu icons - Tăng kích thước icon */
 .header .menu-btn .menu-icon3 img,
 .header .menu-btn .menu-icon5 img {
-    width: 35px; /* Tăng chiều rộng */
-    height: 35px; /* Tăng chiều cao */
+    width: 35px;
+    height: 35px;
     display: block;
-    transform: translateY(-2px); /* Điều chỉnh vị trí để cân bằng */
+    transform: translateY(-2px);
 }
 
 .header .menu-btn .menu-icon3,
@@ -52,8 +50,7 @@
     justify-content: center;
 }
 
-/* Style for separator */
 .header .menu-btn .separator {
-    font-size: 20px; /* Giảm kích thước từ 40px xuống 20px */
-    transform: translateY(0); /* Giữ separator ở vị trí ban đầu */
+    font-size: 20px;
+    transform: translateY(0);
 }
